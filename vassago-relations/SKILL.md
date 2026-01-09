@@ -14,6 +14,22 @@ Vassago is an Obsidian plugin that enhances the graph view by displaying typed, 
 - Configuration files in `ob_relation/` directory to style relationships
 - PIXI.js for custom graph rendering
 
+## Quick Start
+
+使用 Vassago 插件的基本流程：
+
+1. **创建关系配置文件**（如果还不存在）
+   - 在 `<vault-root>/ob_relation/` 文件夹中创建关系类型配置文件（如 `supports.md`）
+   - 使用下面的模板配置样式和属性
+
+2. **在笔记中使用关系**
+   - 在笔记的 frontmatter 中添加关系属性
+   - 例如：`supports: "[[目标笔记]]"`
+
+3. **在图谱视图中查看**
+   - 打开 Obsidian 图谱视图
+   - 关系会以配置的样式显示
+
 ## Relation Configuration Files
 
 ### File Location
@@ -27,6 +43,16 @@ Vassago is an Obsidian plugin that enhances the graph view by displaying typed, 
     ├── equivalent_to.md
     └── related_to.md
 ```
+
+> [!IMPORTANT]
+> **创建新关系类型**
+> 
+> 如果你需要使用的关系类型还不存在，需要在 `ob_relation/` 文件夹中创建对应的配置文件。
+> 
+> 例如，要使用 `causes` 关系：
+> 1. 在 `<vault-root>/ob_relation/` 文件夹中创建 `causes.md` 文件
+> 2. 按照下面的模板配置样式和属性
+> 3. 保存后即可在笔记的 frontmatter 中使用 `causes: "[[目标笔记]]"`
 
 ### File Structure
 
@@ -94,13 +120,13 @@ $shape: straight    # straight | curved
 #### `$pattern` - Line Pattern
 
 ```yaml
-$pattern: solid    # solid | dotted
+$pattern: solid    # solid | dashed
 ```
 
 | Value | Effect | Use Case |
 |-------|--------|----------|
 | `solid` | Solid line ━━━ | Strong, directional relationships |
-| `dotted` | Dotted line ┈┈┈ | Equivalence, symmetric relationships |
+| `dashed` | Dashed line ┈┈┈ | Equivalence, symmetric relationships |
 
 #### `$width` - Line Width
 
@@ -179,9 +205,9 @@ $description: "表示A支持/证实B的观点"    # Detailed description
 | Combination | shape | pattern | Visual | Use Case |
 |-------------|-------|---------|--------|----------|
 | **Straight + Solid** | `straight` | `solid` | ━━━ | Strong, causal, derivation |
-| **Straight + Dotted** | `straight` | `dotted` | ┈┈┈ | Equivalence, symmetric |
+| **Straight + Dashed** | `straight` | `dashed` | ┈┈┈ | Equivalence, symmetric |
 | **Curved + Solid** | `curved` | `solid` | ╭─╮ | Loose association, related |
-| **Curved + Dotted** | `curved` | `dotted` | ╭┈╮ | Not supported (uses curved + solid) |
+| **Curved + Dashed** | `curved` | `dashed` | ╭┈╮ | Not supported (uses curved + solid) |
 
 ### Combination Examples
 
@@ -195,7 +221,7 @@ $arrow: true
 #### Equivalence Relationship (Symmetric)
 ```yaml
 $shape: straight
-$pattern: dotted
+$pattern: dashed
 $arrow: false
 $direction: bidirectional
 ```
@@ -258,7 +284,7 @@ $label: "派生自"
 ---
 $color: "#9C27B0"
 $shape: straight
-$pattern: dotted
+$pattern: dashed
 $width: 2
 $arrow: false
 $direction: bidirectional
@@ -396,7 +422,7 @@ supports:
 - **Straight**: For clear, strong relationships
 - **Curved**: For loose, weak relationships
 - **Solid**: For directional relationships
-- **Dotted**: For symmetric or equivalence relationships
+- **Dashed**: For symmetric or equivalence relationships
 
 ### Direction Settings
 
@@ -421,15 +447,6 @@ $shape: straight
 color: "#4CAF50"    # Will not work!
 shape: straight     # Will not work!
 ```
-
-### Removed Features
-
-- **Dashed lines**: No longer supported (use solid or dotted)
-- **Old style property**: Replaced by `$shape` + `$pattern`
-
-### Version Compatibility
-
-This skill is for Vassago v2.0.0+. Older configurations without `$` prefix are not supported.
 
 ## References
 
